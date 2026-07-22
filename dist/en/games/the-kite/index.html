@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anate Studio — The Kite</title>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+
+  <body>
+    <header class="header">
+  <div class="header__container">
+    <!-- Кнопка hamburger -->
+    <button class="header__burger" data-action="toggle-menu" aria-label="Відкрити меню">
+      <span class="burger__line"></span>
+      <span class="burger__line"></span>
+      <span class="burger__line"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Меню — окремо від header, на весь екран -->
+<nav class="nav" data-state="closed">
+  <div class="nav__container">
+
+    <div class="nav__lang">
+      <button onClick="changeLanguage('ua')" class="lang-btn">UA</button>
+      <span>|</span>
+      <button onClick="changeLanguage('en')" class="lang-btn">EN</button>
+    </div>
+
+    <ul class="nav__games">
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+    </ul>
+  </div>
+</nav>
+      <main class="main" id="main-content" hx-target="this" hx-swap="innerHTML">
+        <div class="main__container">
+  <div class="main__game-title game-title">
+    <div class="game-title__arrow-back" data-action="go-back"></div>
+    <div class="game-title__name">
+      The Kite
+    </div>
+  </div>
+  <div class="blue-line blue-line--top"></div>
+
+  <div class="main__game-page game-page">
+    <div class="game-page__description" data-lang="the_kite_description">
+      
+        
+          
+            <p class="game-page__paragraph">The Kite is a first project of Anate Studio. It is a small dramatic point-and-click adventure which highlights the problems of a struggling family.</p>
+          
+        
+          
+            <p class="game-page__paragraph">It was released on 1 january 2012. And remastered in 2018.</p>
+          
+        
+          
+            <p class="game-page__paragraph">The main character of the game is Mary, a resident of a regular town in 90th. She is a loving mother and careful wife, but her husband, full of different problems, falls down to the alcoholism and domestic abuse. Mary agrees to tolerate, but not when it is about life and health of her child, she is ready to do anything...</p>
+          
+        
+          
+            <h3 class="game-page__features-title">Key Features:</h3>
+          
+        
+          
+            <ul class="game-page__features-list">
+              
+                <li class="game-page__features-item">Explore atmospheric hand-painted locations with challenging puzzles</li>
+              
+                <li class="game-page__features-item">Enjoy a dramatic story with an unexpected ending</li>
+              
+                <li class="game-page__features-item">Listen to an amazing soundtrack by classic composers</li>
+              
+            </ul>
+          
+        
+        
+    </div>
+
+    <div class="game-page__icons">
+      
+        <div class="game-page__icon">
+          <a href="https://store.steampowered.com/app/968700/The_Kite" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/steam-button.png" class="game-page__icon-image" alt="Download The Kite on Steam">
+          </a>
+        </div>
+      
+
+      
+
+      
+
+      
+        <div class="game-page__icon">
+          <a href="https://anatolii.itch.io/the-kite" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/itchio_button.png" class="game-page__icon-image" alt="Download The Kite on Itch">
+          </a>
+        </div>
+      
+
+      
+    </div>
+
+  <!-- Галерея -->
+    
+      <div class="gallery">
+
+        <!-- Головний слайдер -->
+        <div class="swiper gallery__main">
+          <div class="swiper-wrapper">
+            
+              <div class="swiper-slide">
+                
+                  <iframe
+                    class="gallery__iframe"
+                    src="https://www.youtube.com/embed/Qz5IeAoQE34"
+                    allowfullscreen>
+                  </iframe>
+                
+              </div>
+            
+              <div class="swiper-slide">
+                
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/the_kite/the_kite_screen1.jpg"
+                    alt="screenshot The Kite">
+                
+              </div>
+            
+              <div class="swiper-slide">
+                
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/the_kite/the_kite_screen3.jpg"
+                    alt="screenshot The Kite">
+                
+              </div>
+            
+              <div class="swiper-slide">
+                
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/the_kite/the_kite_screen2.jpg"
+                    alt="screenshot The Kite">
+                
+              </div>
+            
+              <div class="swiper-slide">
+                
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/the_kite/the_kite_screen4.jpg"
+                    alt="screenshot The Kite">
+                
+              </div>
+            
+              <div class="swiper-slide">
+                
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/the_kite/the_kite_screen5.jpg"
+                    alt="screenshot The Kite">
+                
+              </div>
+            
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <!-- Мініатюри -->
+        <div class="swiper gallery__thumbs">
+          <div class="swiper-wrapper">
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="https://i.ytimg.com/vi/Qz5IeAoQE34/mqdefault.jpg"
+                    alt="video thumbnail">
+                  <div class="gallery__thumb-play">▶</div>
+                
+              </div>
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="/images/screens/the_kite/the_kite_screen1.jpg"
+                    alt="screenshot thumbnail">
+                
+              </div>
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="/images/screens/the_kite/the_kite_screen3.jpg"
+                    alt="screenshot thumbnail">
+                
+              </div>
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="/images/screens/the_kite/the_kite_screen2.jpg"
+                    alt="screenshot thumbnail">
+                
+              </div>
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="/images/screens/the_kite/the_kite_screen4.jpg"
+                    alt="screenshot thumbnail">
+                
+              </div>
+            
+              <div class="swiper-slide gallery__thumb">
+                
+                  <img
+                    src="/images/screens/the_kite/the_kite_screen5.jpg"
+                    alt="screenshot thumbnail">
+                
+              </div>
+            
+          </div>
+          <!-- Смуга прокрутки -->
+          <div class="swiper-scrollbar"></div>
+        </div>
+
+      </div>
+    
+  </div>
+
+  <div class="blue-line blue-line--bottom"></div>
+</div>
+      </main>
+
+      <footer class="footer">
+  <div class="footer__container">
+    <p class="footer__copyright">Copyright © Anate Studio</p>
+    <div class="footer__socials">
+      <a href="https://www.instagram.com/anatestudio/" target="_blank" rel="noopener" class="social-link social-link--instagram">
+        <img class="social-ling__image" src="/images/icons/instagram.png" alt="instagram">
+      </a>
+      <a href="https://www.twitch.tv/korniy_87" target="_blank" rel="noopener" class="social-link social-link--twitch">
+        <img class="social-ling__image" src="/images/icons/twitch.png" alt="twitch">
+      </a>
+      <a href="https://soundcloud.com/user-526111769" target="_blank" rel="noopener" class="social-link social-link--soundcloud">
+        <img class="social-ling__image" src="/images/icons/soundcloud.png" alt="soundcloud">
+      </a>
+      <a href="http://steamcommunity.com/groups/anatestudio?l=russian" target="_blank" rel="noopener" class="social-link social-link--steam">
+        <img class="social-ling__image" src="/images/icons/steam.svg" alt="steam">
+      </a>
+      <a href="https://www.youtube.com/channel/UC5HH4Ks09GheSPaEiUOgGvw" target="_blank" rel="noopener" class="social-link social-link--youtube">
+        <img class="social-ling__image" src="/images/icons/youtube.png" alt="youtube">
+      </a>
+      <a href="https://anatolii.itch.io/" target="_blank" rel="noopener" class="social-link social-link--itch">
+        <img class="social-ling__image" src="/images/icons/itch.png" alt="itch">
+      </a>
+      <a href="https://www.facebook.com/groups/anatestudio/" target="_blank" rel="noopener" class="social-link social-link--facebook">
+        <img class="social-ling__image" src="/images/icons/facebook.png" alt="facebook">
+      </a>
+      <a href="https://twitter.com/anatestudio" target="_blank" rel="noopener" class="social-link social-link--twitter">
+        <img class="social-ling__image" src="/images/icons/twitter.svg" alt="twitter">
+      </a>
+    </div>
+    <div class="footer__contact">
+      <a href="mailto:info@anatestudio.net" class="footer__email">info@anatestudio.net</a>
+    </div>
+  </div>
+</footer>
+      <script>
+  // Перемикання мови без перевантаження сторінки
+  async function changeLanguage(lang) {
+    // Закриваємо меню якщо відкрите
+    const nav = document.querySelector('.nav');
+    const burger = document.querySelector('.header__burger');
+    if (nav && nav.dataset.state === 'open') {
+      nav.dataset.state = 'closed';
+      burger.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+    try {
+      // запит статичного JSON-файлу з перекладами
+      const response = await fetch(`/locales/${lang}.json`);
+      const translations = await response.json();
+
+      //перебираю на сторінці всі елементи з атрибутом data-lang
+      document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        const data = translations[key];
+
+         if (data) {
+          if (Array.isArray(data)) {
+            element.innerHTML = '';
+
+            data.forEach(block => {
+              if (typeof block === 'string') {
+                const p = document.createElement('p');
+                p.className = 'game-page__paragraph';
+                p.textContent = block;
+                element.appendChild(p);
+              } else if (block.type === 'paragraph') {
+                const p = document.createElement('p');
+                p.className = 'game-page__paragraph';
+                p.textContent = block.text;
+                element.appendChild(p);
+              } else if (block.type === 'heading') {
+                const h3 = document.createElement('h3');
+                h3.className = 'game-page__features-title';
+                h3.textContent = block.text;
+                element.appendChild(h3);
+              } else if (block.type === 'list') {
+                const ul = document.createElement('ul');
+                ul.className = 'game-page__features-list';
+                block.items.forEach(item => {
+                  const li = document.createElement('li');
+                  li.className = 'game-page__features-item';
+                  li.textContent = item;
+                  ul.appendChild(li);
+                });
+                element.appendChild(ul);
+              }
+            });
+          } else {
+            element.textContent = data;
+          }
+        }
+      })
+
+      //міняєм мову в адресному рядку без запиту на сервер
+      const currentPath = window.location.pathname;
+
+      const pathParts = currentPath.split('/') // ["", "en", "games", "the-kite"]
+      pathParts[1] = lang;
+
+      const newPath = pathParts.join('/');
+
+      history.replaceState(null, '', newPath);
+      sessionStorage.setItem('lang', lang)
+      document.documentElement.lang = lang;
+      // Підсвічуємо активну мову
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('lang-btn--active', btn.textContent.toLowerCase() === lang);
+      });
+    } catch (error) {
+      console.error('не вдалося оновити мову', error);
+    }
+  }
+
+  // Навігація на сторінку гри - бере актуальну мову з URL
+
+  document.addEventListener('click', (e) => {
+    const zone = e.target.closest('.game__preview-zone');
+    if (!zone) return;
+
+    const card = zone.closest('[data-game-id]');
+    const currentLang = window.location.pathname.split('/')[1];
+    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+
+    history.pushState(null, '', url);
+    htmx.ajax('GET', url, {
+      target: '#main-content',
+      swap: 'innerHTML',
+      select: '.main__container',
+    });
+  });
+
+
+ // Кнопка назад повертає на головну сторінку зі збереженням мови
+
+  document.addEventListener('click', (e) => {
+    const backBtn = e.target.closest('[data-action="go-back"]');
+    if(!backBtn) return;
+  
+    const currentLang = window.location.pathname.split('/')[1];
+    const url = `/${currentLang}/`;
+
+    history.pushState(null, '', url);
+    htmx.ajax('GET', url, {
+      target:'#main-content',
+      swap: 'innerHTML',
+      select:'.main__container'
+    });
+  })
+
+  // кнопки назад/вперед в браузері
+  window.addEventListener('popstate', () => {
+    const pathParts = window.location.pathname.split('/');
+    const savedLang = sessionStorage.getItem('lang') || pathParts[1];
+    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+
+    if(isGamePage) {
+      const gameId = pathParts[3];
+      const url = `/${savedLang}/games/${gameId}/`;
+      history.replaceState(null, '', url);
+
+      htmx.ajax('GET', url, {
+        target:'#main-content',
+        swap: 'innerHTML',
+        select: '.main__container',
+      });
+    } else {
+      //повертаємось на головну
+      const url = `/${savedLang}/`;
+      history.replaceState(null, '', url);
+
+      htmx.ajax('GET', url, {
+        target:  '#main-content',
+        swap: 'innerHTML',
+        select: '.main__container',
+      });
+    }
+  });
+
+
+ // Галерея Swiper
+  function initGallery() {
+    const galleryEl = document.querySelector('.gallery');
+    if (!galleryEl) return; // якщо галереї немає — виходимо
+
+    const thumbsSwiper = new Swiper('.gallery__thumbs', {
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      freeMode: true,
+      watchSlidesProgress: true,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+      },
+    });
+
+    new Swiper('.gallery__main', {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      thumbs: {
+        swiper: thumbsSwiper,
+      },
+    });
+  }
+
+  // При прямому завантаженні сторінки
+  initGallery();
+
+  // Після кожного HTMX переходу
+  document.addEventListener('htmx:afterSwap', () => {
+    initGallery();
+  });
+
+
+  // Hamburger меню
+  document.addEventListener('click', (e) => {
+    const burger = e.target.closest('[data-action="toggle-menu"]');
+    if (!burger) return;
+
+    const nav = document.querySelector('.nav');
+    const isOpen = nav.dataset.state === 'open';
+
+    nav.dataset.state = isOpen ? 'closed' : 'open';
+    burger.classList.toggle('is-active');
+
+    // Забороняємо скрол сторінки коли меню відкрите
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+  });
+
+  // Навігація по іграх через меню
+  document.addEventListener('click', (e) => {
+  const link = e.target.closest('[data-nav-game]');
+  if (!link) return;
+
+  const gameId = link.dataset.navGame;
+  const currentLang = window.location.pathname.split('/')[1];
+  const url = `/${currentLang}/games/${gameId}/`;
+
+  // Закриваємо меню
+  const nav = document.querySelector('.nav');
+  const burger = document.querySelector('.header__burger');
+  nav.dataset.state = 'closed';
+  burger.classList.remove('is-active');
+  document.body.style.overflow = '';
+
+  // Переходимо на сторінку гри
+  history.pushState(null, '', url);
+  htmx.ajax('GET', url, {
+    target: '#main-content',
+    swap: 'innerHTML',
+    select: '.main__container',
+  });
+});
+
+
+// виділення активної мови
+
+function setActiveLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('lang-btn--active', btn.textContent.toLowerCase() === lang);
+  });
+}
+
+// При завантаженні
+setActiveLang(window.location.pathname.split('/')[1]);
+
+// Після HTMX переходу
+document.addEventListener('htmx:afterSwap', () => {
+  setActiveLang(window.location.pathname.split('/')[1]);
+  initGallery();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+</script>
+  </body>
+
+</html>

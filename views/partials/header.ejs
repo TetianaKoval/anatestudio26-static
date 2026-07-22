@@ -1,0 +1,31 @@
+<header class="header">
+  <div class="header__container">
+    <!-- Кнопка hamburger -->
+    <button class="header__burger" data-action="toggle-menu" aria-label="Відкрити меню">
+      <span class="burger__line"></span>
+      <span class="burger__line"></span>
+      <span class="burger__line"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Меню — окремо від header, на весь екран -->
+<nav class="nav" data-state="closed">
+  <div class="nav__container">
+
+    <div class="nav__lang">
+      <button onClick="changeLanguage('ua')" class="lang-btn">UA</button>
+      <span>|</span>
+      <button onClick="changeLanguage('en')" class="lang-btn">EN</button>
+    </div>
+
+    <ul class="nav__games">
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
+      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+    </ul>
+  </div>
+</nav>

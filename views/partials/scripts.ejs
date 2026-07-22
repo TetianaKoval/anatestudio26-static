@@ -1,0 +1,243 @@
+<script>
+  // Перемикання мови без перевантаження сторінки
+  async function changeLanguage(lang) {
+    // Закриваємо меню якщо відкрите
+    const nav = document.querySelector('.nav');
+    const burger = document.querySelector('.header__burger');
+    if (nav && nav.dataset.state === 'open') {
+      nav.dataset.state = 'closed';
+      burger.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+    try {
+      // запит статичного JSON-файлу з перекладами
+      const response = await fetch(`/locales/${lang}.json`);
+      const translations = await response.json();
+
+      //перебираю на сторінці всі елементи з атрибутом data-lang
+      document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        const data = translations[key];
+
+         if (data) {
+          if (Array.isArray(data)) {
+            element.innerHTML = '';
+
+            data.forEach(block => {
+              if (typeof block === 'string') {
+                const p = document.createElement('p');
+                p.className = 'game-page__paragraph';
+                p.textContent = block;
+                element.appendChild(p);
+              } else if (block.type === 'paragraph') {
+                const p = document.createElement('p');
+                p.className = 'game-page__paragraph';
+                p.textContent = block.text;
+                element.appendChild(p);
+              } else if (block.type === 'heading') {
+                const h3 = document.createElement('h3');
+                h3.className = 'game-page__features-title';
+                h3.textContent = block.text;
+                element.appendChild(h3);
+              } else if (block.type === 'list') {
+                const ul = document.createElement('ul');
+                ul.className = 'game-page__features-list';
+                block.items.forEach(item => {
+                  const li = document.createElement('li');
+                  li.className = 'game-page__features-item';
+                  li.textContent = item;
+                  ul.appendChild(li);
+                });
+                element.appendChild(ul);
+              }
+            });
+          } else {
+            element.textContent = data;
+          }
+        }
+      })
+
+      //міняєм мову в адресному рядку без запиту на сервер
+      const currentPath = window.location.pathname;
+
+      const pathParts = currentPath.split('/') // ["", "en", "games", "the-kite"]
+      pathParts[1] = lang;
+
+      const newPath = pathParts.join('/');
+
+      history.replaceState(null, '', newPath);
+      sessionStorage.setItem('lang', lang)
+      document.documentElement.lang = lang;
+      // Підсвічуємо активну мову
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('lang-btn--active', btn.textContent.toLowerCase() === lang);
+      });
+    } catch (error) {
+      console.error('не вдалося оновити мову', error);
+    }
+  }
+
+  // Навігація на сторінку гри - бере актуальну мову з URL
+
+  document.addEventListener('click', (e) => {
+    const zone = e.target.closest('.game__preview-zone');
+    if (!zone) return;
+
+    const card = zone.closest('[data-game-id]');
+    const currentLang = window.location.pathname.split('/')[1];
+    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+
+    history.pushState(null, '', url);
+    htmx.ajax('GET', url, {
+      target: '#main-content',
+      swap: 'innerHTML',
+      select: '.main__container',
+    });
+  });
+
+
+ // Кнопка назад повертає на головну сторінку зі збереженням мови
+
+  document.addEventListener('click', (e) => {
+    const backBtn = e.target.closest('[data-action="go-back"]');
+    if(!backBtn) return;
+  
+    const currentLang = window.location.pathname.split('/')[1];
+    const url = `/${currentLang}/`;
+
+    history.pushState(null, '', url);
+    htmx.ajax('GET', url, {
+      target:'#main-content',
+      swap: 'innerHTML',
+      select:'.main__container'
+    });
+  })
+
+  // кнопки назад/вперед в браузері
+  window.addEventListener('popstate', () => {
+    const pathParts = window.location.pathname.split('/');
+    const savedLang = sessionStorage.getItem('lang') || pathParts[1];
+    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+
+    if(isGamePage) {
+      const gameId = pathParts[3];
+      const url = `/${savedLang}/games/${gameId}/`;
+      history.replaceState(null, '', url);
+
+      htmx.ajax('GET', url, {
+        target:'#main-content',
+        swap: 'innerHTML',
+        select: '.main__container',
+      });
+    } else {
+      //повертаємось на головну
+      const url = `/${savedLang}/`;
+      history.replaceState(null, '', url);
+
+      htmx.ajax('GET', url, {
+        target:  '#main-content',
+        swap: 'innerHTML',
+        select: '.main__container',
+      });
+    }
+  });
+
+
+ // Галерея Swiper
+  function initGallery() {
+    const galleryEl = document.querySelector('.gallery');
+    if (!galleryEl) return; // якщо галереї немає — виходимо
+
+    const thumbsSwiper = new Swiper('.gallery__thumbs', {
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      freeMode: true,
+      watchSlidesProgress: true,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+      },
+    });
+
+    new Swiper('.gallery__main', {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      thumbs: {
+        swiper: thumbsSwiper,
+      },
+    });
+  }
+
+  // При прямому завантаженні сторінки
+  initGallery();
+
+  // Після кожного HTMX переходу
+  document.addEventListener('htmx:afterSwap', () => {
+    initGallery();
+  });
+
+
+  // Hamburger меню
+  document.addEventListener('click', (e) => {
+    const burger = e.target.closest('[data-action="toggle-menu"]');
+    if (!burger) return;
+
+    const nav = document.querySelector('.nav');
+    const isOpen = nav.dataset.state === 'open';
+
+    nav.dataset.state = isOpen ? 'closed' : 'open';
+    burger.classList.toggle('is-active');
+
+    // Забороняємо скрол сторінки коли меню відкрите
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+  });
+
+  // Навігація по іграх через меню
+  document.addEventListener('click', (e) => {
+  const link = e.target.closest('[data-nav-game]');
+  if (!link) return;
+
+  const gameId = link.dataset.navGame;
+  const currentLang = window.location.pathname.split('/')[1];
+  const url = `/${currentLang}/games/${gameId}/`;
+
+  // Закриваємо меню
+  const nav = document.querySelector('.nav');
+  const burger = document.querySelector('.header__burger');
+  nav.dataset.state = 'closed';
+  burger.classList.remove('is-active');
+  document.body.style.overflow = '';
+
+  // Переходимо на сторінку гри
+  history.pushState(null, '', url);
+  htmx.ajax('GET', url, {
+    target: '#main-content',
+    swap: 'innerHTML',
+    select: '.main__container',
+  });
+});
+
+
+// виділення активної мови
+
+function setActiveLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('lang-btn--active', btn.textContent.toLowerCase() === lang);
+  });
+}
+
+// При завантаженні
+setActiveLang(window.location.pathname.split('/')[1]);
+
+// Після HTMX переходу
+document.addEventListener('htmx:afterSwap', () => {
+  setActiveLang(window.location.pathname.split('/')[1]);
+  initGallery();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+</script>

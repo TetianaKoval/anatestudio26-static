@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="<%= currentLang %>">
+
+  <%- include('partials/head', { pageTitle: 'Anate Studio — ' + game.name }) %>
+
+  <body>
+    <%- include('partials/header') %>
+      <main class="main" id="main-content" hx-target="this" hx-swap="innerHTML">
+        <%- include('game-detail', { game: game }) %>
+      </main>
+
+      <%- include('partials/footer') %>
+      <%- include('partials/scripts') %>
+  </body>
+
+</html>

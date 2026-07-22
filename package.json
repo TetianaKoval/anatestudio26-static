@@ -1,0 +1,19 @@
+{
+  "name": "anatestudio26",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.mjs",
+    "dev": "nodemon app.mjs",
+    "dev:sync": "browser-sync start --proxy \"localhost:3000\" --files \"public/css/*.css, views/**/*.ejs\""
+  },
+  "keywords": [],
+  "author": "anateStudio",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}

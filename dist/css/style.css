@@ -1,0 +1,642 @@
+/* змінні і базові налаштування*/
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1b1b1b;
+  --text-muted: #242424;
+  --font-main: 'Roboto', 'Arial', sans-serif;
+  --transition-speed: 0.3s;
+}
+
+/* Скидання відступів браузера */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  overflow-x: hidden;
+  font-size: 16px;
+}
+
+/* обмежувач ширини */
+
+[class*="__container"] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width:420px) {
+  [class*="__container"] {
+    padding: 0 5px;
+  }
+}
+
+
+/*  ======================================
+    Стилі для контенту
+    ====================================== */
+
+    .game-page__features-title {
+      margin-top: 40px;
+    }
+
+    .game-page__paragraph {
+      margin-bottom: 20px;
+    }
+
+    .game-page__features-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+
+    .game-page__features-item {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 6px;
+    }
+
+    .game-page__features-item::before {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 1.5px;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #46C5EE; /* блакитний акцент */
+    }
+
+    .game-page__description {
+      margin-bottom: 40px;
+    }
+
+    .game-page__icons {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===================================================
+   Header
+   ===================================================*/
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #fff;
+  }
+
+  .header__container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 20px;
+  }
+
+  /* Hamburger кнопка */
+  .header__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 300;
+  }
+
+  .burger__line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-color);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* Анімація X коли меню відкрите */
+  .header__burger.is-active .burger__line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .header__burger.is-active .burger__line:nth-child(2) {
+    opacity: 0;
+  }
+  .header__burger.is-active .burger__line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+/* ===================================================
+   Nav меню
+   ===================================================*/
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #46C5EE;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Анімація виїзду зверху */
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+  }
+
+  .nav[data-state="open"] {
+    transform: translateY(0);
+  }
+
+  .nav__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .nav__lang {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: var(--font-main);
+    color: #fff;
+    letter-spacing: 2px;
+    transition: opacity 0.3s;
+  }
+
+  .lang-btn:hover {
+    opacity: 0.7;
+  }
+
+  .nav__games {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav__link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: opacity 0.3s;
+  }
+
+  .nav__link:hover {
+    opacity: 0.7;
+  }
+
+  .nav__contact {
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    padding-bottom: 2px;
+    transition: opacity 0.3s;
+  }
+
+  .nav__contact:hover {
+    opacity: 0.7;
+  }
+
+  .lang-btn--active {
+    color: #fff;
+    font-weight: 700;
+  }
+
+/*  ======================================
+    Стилі для сітки ігор
+    ====================================== */
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  padding: 40px 0;
+}
+
+@media (max-width: 420px) {
+  .games {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1120px) {
+  .games {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*  ======================================
+    Стилі для картки гри
+    ====================================== */
+
+.game {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(41, 41, 41, 0);
+  filter: grayscale(100%);
+  transition: transform var(--transition-speed), box-shaddow var(--transition-speed), filter var(--transition-speed);
+  ;
+}
+
+.game:hover {
+  transform: translateY(-5px);
+  filter: grayscale(0%);
+  /* box-shadow: 0 10px 30px rgba(41, 41, 41, 0.098); */
+}
+
+.game__preview-zone {
+  cursor: pointer;
+}
+
+.game__image {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 10px;
+}
+
+.game__image>img {
+  display: block;
+  width: 100%;
+}
+
+/* .game__name, .game__description, .game__icons {
+  padding: 0 20px;
+} */
+
+.game__name {
+  font-size: 38px;
+  line-height: 100%;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 420px) {
+  .game__name {
+    font-size: 32px;
+  }
+  
+}
+
+.game__name::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-color);
+  margin-top: 10px;
+}
+
+.game__description {
+  margin-bottom: 30px;
+  font-size: 17px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.game__icons {
+  display: flex;
+  /* width: 65%; */
+  justify-content: space-between;
+  margin: 0 auto 30px;
+  gap: 16px;
+}
+
+.icon {
+  width: fit-content;
+}
+
+.icon__link {
+  display: block;
+  width: fit-content;
+  height: 30px;
+  overflow: hidden;
+}
+
+.icon__link:hover {
+  transform: translateY(-3px) scale(1.1);
+  transition: var(--transition-speed);
+}
+
+.icon__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ============================================
+   Блакитна лінія декор
+   ============================================*/
+
+.blue-line {
+  display: block;
+  background-image: url('../images/blue_line.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100px;
+}
+
+.blue-line--top {
+  background-position: right center;
+  margin-left: calc(-50vw + 50%);
+  width: calc(50vw + 50%);
+  margin-bottom: -30px;
+}
+
+.blue-line--bottom {
+  background-position: right center;
+  margin-left: 0;
+  margin-right: calc(-50vw + 50%);
+  width: calc(50vw + 50%);
+  scale: -1 1;
+}
+
+
+/* ===================================================
+   Шапка з логотипом та описом
+   ===================================================
+*/
+
+.studio-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (min-width: 550px) {
+  .studio-info {
+    flex-direction: row;
+    text-align: left;
+    padding: 0 30px;
+  }
+}
+
+.studio-info__logo {
+  width: 100px;
+  height: 162px;
+  flex-shrink: 0;
+  margin-right: 40px;
+}
+
+.studio-info__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.game-title {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.game-title__name {
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .game-title__name {
+    font-size: 40px;
+  }
+}
+
+.game-title__arrow-back {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-image: url('/images/icons/arrow-back.png');
+  cursor: pointer;
+  transition: var(--transition-speed);
+  flex-shrink: 0;
+}
+
+.game-title__arrow-back:hover {
+  transform: translateX(-3px);
+}
+/* ===================================================
+   Footer
+   ===================================================
+*/
+
+.footer__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  height: 120px;
+}
+
+@media (min-width: 800px) {
+  .footer__container {
+    flex-direction: row;
+  }
+}
+
+.footer__socials {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: 330px;
+  justify-items: center;
+}
+
+@media (max-width: 500px) {
+  .footer__socials {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 20px;
+    margin: 20px 0 20px 0;
+  }
+}
+
+.social-link {
+  display: block;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transition: var(--transition-speed);
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+}
+
+.social-ling__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.footer__email {
+  color: var(--font-main);
+  position: relative;
+  padding-left:25px;
+  transition: var(--transition-speed);
+}
+
+.footer__email:hover {
+  color: #46C5EE;
+}
+
+.footer__email::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-image: url("/images/icons/email.svg");
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ===================================================
+   Галерея
+   ===================================================*/
+
+.gallery {
+  margin-top: 40px;
+}
+
+/* Головний слайд */
+.gallery__main {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.gallery__main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Мініатюри */
+.gallery__thumbs {
+  margin-top: 8px;
+  padding-bottom: 20px; /* місце для scrollbar */
+}
+
+.gallery__thumb {
+  width: 120px !important; /* фіксована ширина мініатюри */
+  height: 68px !important;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--transition-speed);
+  overflow: hidden;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__thumb:hover {
+  opacity: 1;
+}
+
+/* Активна мініатюра */
+.swiper-slide-thumb-active.gallery__thumb {
+  opacity: 1;
+  outline: 2px solid #46C5EE; /* блакитна рамка як акцент */
+  outline-offset: -2px;
+}
+
+/* Іконка play на відео мініатюрі */
+.gallery__thumb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+/* Стрілки */
+.gallery__main .swiper-button-prev,
+.gallery__main .swiper-button-next {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background var(--transition-speed);
+}
+
+.gallery__main .swiper-button-prev:hover,
+.gallery__main .swiper-button-next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.gallery__main .swiper-button-prev::after,
+.gallery__main .swiper-button-next::after {
+  font-size: 14px;
+}
+
+/* Scrollbar */
+.gallery__thumbs .swiper-scrollbar {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  bottom: 0;
+}
+
+.gallery__thumbs .swiper-scrollbar-drag {
+  background: #46C5EE;
+  border-radius: 2px;
+}

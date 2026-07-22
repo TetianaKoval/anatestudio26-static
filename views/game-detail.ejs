@@ -1,0 +1,130 @@
+<div class="main__container">
+  <div class="main__game-title game-title">
+    <div class="game-title__arrow-back" data-action="go-back"></div>
+    <div class="game-title__name">
+      <%= game.name %>
+    </div>
+  </div>
+  <div class="blue-line blue-line--top"></div>
+
+  <div class="main__game-page game-page">
+    <div class="game-page__description" data-lang="<%= game.langKey %>">
+      <% if(locals.t && t[game.langKey]) {%>
+        <% t[game.langKey].forEach(block => { %>
+          <% if (typeof block === 'string') { %>
+            <p class="game-page__paragraph"><%= block %></p>
+          <% } else if (block.type === 'paragraph') { %>
+            <p class="game-page__paragraph"><%= block.text %></p>
+          <% } else if (block.type === 'heading') { %>
+            <h3 class="game-page__features-title"><%= block.text %></h3>
+          <% } else if (block.type === 'list') { %>
+            <ul class="game-page__features-list">
+              <% block.items.forEach(item => { %>
+                <li class="game-page__features-item"><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        <% }) %>
+        <%} else {%>
+          <p>Description not found.</p>
+        <%}%>
+    </div>
+
+    <div class="game-page__icons">
+      <% if (game.steamLink) {%>
+        <div class="game-page__icon">
+          <a href="<%= game.steamLink %>" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/steam-button.png" class="game-page__icon-image" alt="Download <%= game.name %> on Steam">
+          </a>
+        </div>
+      <% }%>
+
+      <% if (game.xBoxLink) {%>
+        <div class="game-page__icon">
+          <a href="<%= game.xBoxLink %>" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/xbox_button_white.png" class="game-page__icon-image" alt="Download <%= game.name %> for Xbox">
+          </a>
+        </div>
+      <% }%>
+
+      <% if (game.nintendoLink) {%>
+        <div class="game-page__icon">
+          <a href="<%= game.nintendoLink %>" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/switch_button.png" class="game-page__icon-image" alt="Download <%= game.name %> for Nintendo">
+          </a>
+        </div>
+      <% }%>
+
+      <% if (game.itchLink) {%>
+        <div class="game-page__icon">
+          <a href="<%= game.itchLink %>" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/itchio_button.png" class="game-page__icon-image" alt="Download <%= game.name %> on Itch">
+          </a>
+        </div>
+      <% }%>
+
+      <% if (game.googlePlayLink) {%>
+        <div class="game-page__icon">
+          <a href="<%= game.googlePlayLink %>" class="game-page__icon-link" target="_blank" rel="noopener">
+            <img src="/images/icons/googleplay_button2.png" class="game-page__icon-image" alt="Play<%= game.name %> on Googe Play">
+          </a>
+        </div>
+      <% }%>
+    </div>
+
+  <!-- Галерея -->
+    <% if(game.media && game.media.length > 0) { %>
+      <div class="gallery">
+
+        <!-- Головний слайдер -->
+        <div class="swiper gallery__main">
+          <div class="swiper-wrapper">
+            <% game.media.forEach(item => { %>
+              <div class="swiper-slide">
+                <% if(item.type === 'video') { %>
+                  <iframe
+                    class="gallery__iframe"
+                    src="https://www.youtube.com/embed/<%= item.youtubeId %>"
+                    allowfullscreen>
+                  </iframe>
+                <% } else { %>
+                  <img
+                    class="gallery__main-img"
+                    src="/images/screens/<%= item.url %>"
+                    alt="screenshot <%= game.name %>">
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <!-- Мініатюри -->
+        <div class="swiper gallery__thumbs">
+          <div class="swiper-wrapper">
+            <% game.media.forEach(item => { %>
+              <div class="swiper-slide gallery__thumb">
+                <% if(item.type === 'video') { %>
+                  <img
+                    src="https://i.ytimg.com/vi/<%= item.youtubeId %>/mqdefault.jpg"
+                    alt="video thumbnail">
+                  <div class="gallery__thumb-play">▶</div>
+                <% } else { %>
+                  <img
+                    src="/images/screens/<%= item.url %>"
+                    alt="screenshot thumbnail">
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+          <!-- Смуга прокрутки -->
+          <div class="swiper-scrollbar"></div>
+        </div>
+
+      </div>
+    <% } %>
+  </div>
+
+  <div class="blue-line blue-line--bottom"></div>
+</div>

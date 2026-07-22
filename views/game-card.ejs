@@ -1,0 +1,55 @@
+<article class="games__game game" data-game-id="<%= id %>">
+  <div class="game__preview-zone">
+    <div class="game__image">
+      <img src="/images/games/<%= image %>" alt="<%= name %> preview">
+    </div>
+
+    <h3 class="game__name">
+      <%= name %>
+    </h3>
+    <p class="game__description" data-lang="<%= langKey + '_short'%>">
+      <%= translation %>
+    </p>
+  </div>
+  <div class="game__icons">
+    <% if (locals.steamLink) {%>
+      <div class="icons__icon icon">
+        <a href="<%= steamLink %>" class="icon__link" target="_blank" rel="noopener">
+          <img src="/images/icons/steam.svg" class="icon__image" alt="Download <%= name %> on Steam">
+        </a>
+      </div>
+    <% }%>
+
+    <% if (locals.xBoxLink) {%>
+      <div class="icons__icon icon">
+        <a href="<%= xBoxLink %>" class="icon__link" target="_blank" rel="noopener">
+          <img src="/images/icons/xbox.svg" class="icon__image" alt="Download <%= name %> for Xbox">
+        </a>
+      </div>
+    <% }%>
+
+    <% if (locals.nintendoLink) {%>
+      <div class="icons__icon icon">
+        <a href="<%= nintendoLink %>" class="icon__link" target="_blank" rel="noopener">
+          <img src="/images/icons/nintendo.svg" class="icon__image" alt="Download <%= name %> for Nintendo">
+        </a>
+      </div>
+    <% }%>
+
+    <% if (locals.itchLink) {%>
+      <div class="icons__icon icon">
+        <a href="<%= itchLink %>" class="icon__link" target="_blank" rel="noopener">
+          <img src="/images/icons/itch.svg" class="icon__image" alt="Download <%= name %> on Itch">
+        </a>
+      </div>
+    <% }%>
+
+    <% if (locals.googlePlayLink) {%>
+      <div class="icons__icon icon">
+        <a href="<%= googlePlayLink %>" class="icon__link" target="_blank" rel="noopener">
+          <img src="/images/icons/googleplay.svg" class="icon__image" alt="Play<%= name %> on Googe Play">
+        </a>
+      </div>
+    <% }%>
+  </div>
+</article>

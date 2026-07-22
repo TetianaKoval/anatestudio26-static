@@ -1,0 +1,73 @@
+{
+  "welcome_text": "Anate Studio is the brand of Ukrainian solo indie game developer Anatolii Koval. The author independently creates deep psychological point-and-click adventure games and dramas characterized by a grim atmosphere and a strong focus on complex social themes.",
+  "the_kite_description_short": "A dramatic point-and-click adventure game that highlights the problems of a struggling family.",
+  "octave_description_short": "An exciting point-and-click horror adventure with action elements, featuring paranormal phenomena and plenty of scary, unexpected twists.",
+  "little_kite_description_short": "A new version of the game The Kite (2012). Now the events take place not only in the real world, but also in the boy's world of fantasy.",
+  "repentant_description_short": "A dramatic point & click game with hand-painted art and an intriguing story with an unexpected ending.",
+  "the_safe_place_description_short": "A dramatic, deep social point&click adventure game about a tough childhood and self-sacrifice.",
+  "hermitate_description_short": "A 3D point-and-click adventure game and a deeply emotional social drama that explores the struggle of self-discovery.",
+  "the_kite_description": [
+    { "type": "paragraph", "text": "The Kite is a first project of Anate Studio. It is a small dramatic point-and-click adventure which highlights the problems of a struggling family." },
+    { "type": "paragraph", "text": "It was released on 1 january 2012. And remastered in 2018." },
+    { "type": "paragraph", "text": "The main character of the game is Mary, a resident of a regular town in 90th. She is a loving mother and careful wife, but her husband, full of different problems, falls down to the alcoholism and domestic abuse. Mary agrees to tolerate, but not when it is about life and health of her child, she is ready to do anything..." },
+    { "type": "heading", "text": "Key Features:" },
+    { "type": "list", "items": [
+      "Explore atmospheric hand-painted locations with challenging puzzles",
+      "Enjoy a dramatic story with an unexpected ending",
+      "Listen to an amazing soundtrack by classic composers"
+    ]}
+  ],
+  "octave_description": [
+    { "type": "paragraph", "text": "Octave is a point-and-click horror adventure with action elements." },
+    { "type": "paragraph", "text": "You play the role of a guy who happens to be in the wrong place at the wrong time. You are dragged into a dark forest, but on the verge of death, you are mysteriously saved from your killer by a someone or something. As you venture deeper into the woods you find yourself surrounded by atrocity. You realise that salvation can turn out to be a real nightmare. All the way through fear you seek out the mysteries of the dark forest. The struggle for life has only just begun!" },
+    { "type": "heading", "text": "Key Features:" },
+    { "type": "list", "items": [
+      "atmospheric dark forest with creepy shadows and monsters",
+      "old house full of puzzles and paranormal activities",
+      "the underworld, where you have to run a lot"
+    ]}
+  ],
+  "little_kite_description": [
+    { "type": "paragraph", "text": "Adventure Little Kite is a completely redone version of an old game The Kite (2012)." },
+    { "type": "paragraph", "text": "New engine, art, characters and storyline." },
+    { "type": "paragraph", "text": "The game highlights the problems of a struggling family, in which one person has given up, and another tries to correct mistakes of the past. The main characters are Mary and her son Andrew. After the death of her husband, Mary married for a second time, to Oliver, in an attempt to create a full-fledged family for her son. But everyday, problems consume the new husband and he finds his solace in alcohol. Soon, they find domestic violence becomes commonplace." },
+    { "type": "paragraph", "text": "Mary's patience and inaction, so habitual and convenient for everyone but little Andrew, brings the life of their family to an extreme point - a point where she needs to make a bold decision." },
+    { "type": "heading", "text": "Key Features:" },
+    { "type": "list", "items": [
+      "Dramatic story about Mary and Andrew",
+      "Two playable main characters",
+      "A lot of puzzles with different difficulties",
+      "Two locations: the real world and the Andrew's fantasy world.",
+      "Each of them has its own unique atmosphere."
+    ]}
+  ],
+  "repentant_description": [
+    { "type": "paragraph", "text": "Repentant is a dramatic point & click adventure game with hand-painted art." },
+    { "type": "paragraph", "text": "Experienced criminal Oliver begins to suffer from strong remorse after the terrible deeds of which his family has suffered. Unsuccessful attempts to restore relations with his ex-wife further worsen his condition and alcohol dependence. One day in a small shop, he becomes a witness of a robbery committed by a young girl. At this moment, he gets the opportunity to atone for his sins by helping another person. But who really needs help and who is the victim? It remains to be seen." },
+    { "type": "paragraph", "text": "Repentant is partially a sequel to the game Little Kite, but it can be played by a person who is not familiar with Little Kite." },
+    { "type": "heading", "text": "Key Features:" },
+    { "type": "list", "items": [
+      "Explore atmospheric hand-painted locations with challenging puzzles",
+      "Enjoy an intriguing story with an unexpected ending",
+      "Listen to an amazing soundtrack by Abstracode and full English voice acting"
+    ]}
+  ],
+  "the_safe_place_description": [
+    { "type": "paragraph", "text": "This is a dramatic deep social point&click adventure about tough childhood and self-sacrifice. The Safe Place is part of Little Kite series." },
+    { "type": "paragraph", "text": "The plot of the game is built around an ordinary engineer Alexander, who lived in a post-Soviet city in the early 90's, just in the midst of the economic crisis, as well as a 12-year-old girl Christina with a difficult fate." },
+    { "type": "paragraph", "text": "He killed a man by negligence. She was a witness. Fearing responsibility, Alexander hides all traces of his crime and persuades the girl to remain silent about what she saw. However, in turn, she asks Alexander to help her solve her own problems. At first, this seems like a good deal to Alexander, but later on things went all wrong." },
+    { "type": "paragraph", "text": "The gameplay consists of classic point&click adventure puzzles combined with dramatic plot twists that will send you on an emotional roller coaster ride from sympathy to hate." },
+    { "type": "heading", "text": "Key Features:" },
+    { "type": "list", "items": [
+      "Fully voice acted dialogues in English and Ukrainian",
+      "Your dialogue choice influences the game plot",
+      "Beautiful hand-drawn visuals",
+      "Original quest designs of different complexity"
+    ]}
+  ],
+  "hermitate_description": [
+    { "type": "paragraph", "text": "It’s a 3D point-and-click adventure and a deeply emotional social drama that explores the struggles of self-discovery, confronting inner demons, and finding hope in the darkest moments." },
+    { "type": "paragraph", "text": "The game is the fourth in The Little Kite series." },
+    { "type": "paragraph", "text": "The project has been in development since 2023 and is currently ongoing." }
+  ]
+}

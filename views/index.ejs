@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="<%= currentLang %>">
+  <%- include ('partials/head') %>
+  <body>
+    <%- include ('partials/header') %>
+    
+    <main class="main" id="main-content" hx-target="this" hx-swap="innerHTML">
+      <div class="main__container">
+        <div class="main__studio-info studio-info">
+          <div class="studio-info__logo">
+            <img src="/images/anatestudio_logo.png" alt="Anate Studio logo" class="studio-info__logo-img">
+          </div>
+          <p class="studio-info__description" id="studio-description" data-lang="welcome_text">
+            <%= t.welcome_text %>
+          </p>
+        </div>
+        <div class="blue-line blue-line--top"></div>
+
+        <div class="main__games games">
+          <% games.forEach(game => { %>
+            <%- include('game-card', { 
+              id: game.id, 
+              image: game.image, 
+              name: game.name, 
+              langKey: game.langKey,
+              translation: t[game.langKey + '_short'],
+              steamLink: game.steamLink,
+              xBoxLink: game.xBoxLink,
+              nintendoLink: game.nintendoLink,
+              itchLink: game.itchLink,
+              googlePlayLink: game.googlePlayLink,
+              currentLang: currentLang,
+            }) %>
+          <% }) %>
+        </div>
+
+        <div class="blue-line blue-line--bottom"></div>
+      </div>
+    </main>
+
+    <%- include('partials/footer') %>
+    <%- include('partials/scripts') %>
+  </body>
+
+</html>
