@@ -20,6 +20,17 @@ async function writeFile(filePath, content) {
   await fs.writeFile(filePath, content);
 }
 
+async function clearDir(dir) {
+  // Очищуємо саме ВМІСТ папки (а не видаляємо і не пересворюємо саму папку) —
+  // на Windows саму папку "dist" іноді неможливо видалити через сторонній процес,
+  // що тримає її "зайнятою", хоча файли всередині видаляються без проблем.
+  await fs.mkdir(dir, { recursive: true });
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    await fs.rm(path.join(dir, entry.name), { recursive: true, force: true });
+  }
+}
+
 async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });
   const entries = await fs.readdir(src, { withFileTypes: true });
@@ -37,6 +48,9 @@ async function copyDir(src, dest) {
 async function build() {
   const languages = ['en', 'ua'];
 
+  // Очищуємо dist/ перед кожною збіркою, щоб не лишались файли зі старою структурою маршрутів
+  await clearDir(DIST_DIR);
+
   for (const lang of languages) {
     const t = await loadLocale(lang);
 
@@ -47,13 +61,13 @@ async function build() {
     );
     await writeFile(path.join(DIST_DIR, lang, 'index.html'), indexHtml);
 
-    // Сторінка кожної гри: views/game-page.ejs -> dist/en/games/<id>/index.html
+    // Сторінка кожної гри: views/game-page.ejs -> dist/en/<category>/<id>/index.html
     for (const game of gameList) {
       const gameHtml = await ejs.renderFile(
         path.join(VIEWS_DIR, 'game-page.ejs'),
-        { game, t, currentLang: lang }
+        { game, games: gameList, t, currentLang: lang }
       );
-      await writeFile(path.join(DIST_DIR, lang, 'games', game.id, 'index.html'), gameHtml);
+      await writeFile(path.join(DIST_DIR, lang, game.category, game.id, 'index.html'), gameHtml);
     }
 
     console.log(`Згенеровано сторінки для мови: ${lang}`);

@@ -385,6 +385,46 @@ body {
 }
 
 
+/* ============================================
+   Таби категорій ігор
+   ============================================*/
+
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 40px;
+}
+
+.category-tabs__button {
+  border: none;
+  cursor: pointer;
+  padding: 12px 32px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: var(--text-color);
+  color: #fff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.category-tabs__button--active {
+  background-color: #46C5EE;
+  color: var(--text-color);
+}
+
+.category-tabs__button:not(.category-tabs__button--active):hover {
+  background-color: #333;
+}
+
+.games__game--hidden {
+  display: none;
+}
+
+
 /* ===================================================
    Шапка з логотипом та описом
    ===================================================

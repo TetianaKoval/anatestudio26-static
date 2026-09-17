@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
 
   <head>
   <meta charset="UTF-8">
@@ -34,12 +34,31 @@
     </div>
 
     <ul class="nav__games">
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="hermitate" data-nav-category="story-based-games">Hermitate</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-safe-place" data-nav-category="story-based-games">The Safe Place</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="repentant" data-nav-category="story-based-games">Repentant</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="little-kite" data-nav-category="story-based-games">Little Kite</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="octave" data-nav-category="experimental-games">Octave</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-kite" data-nav-category="story-based-games">The Kite</a>
+        </li>
+      
     </ul>
   </div>
 </nav>
@@ -58,29 +77,29 @@
       
         
           
-            <p class="game-page__paragraph">The Kite — це перший проєкт Anate Studio. Це невелика драматична пригодницька гра у жанрі point-and-click, яка висвітлює проблеми сім&#39;ї у скрутному становищі.</p>
+            <p class="game-page__paragraph">The Kite is a first project of Anate Studio. It is a small dramatic point-and-click adventure which highlights the problems of a struggling family.</p>
           
         
           
-            <p class="game-page__paragraph">Гра вийшла 1 січня 2012 року і була перевидана у 2018 році.</p>
+            <p class="game-page__paragraph">It was released on 1 january 2012. And remastered in 2018.</p>
           
         
           
-            <p class="game-page__paragraph">Головна героїня гри — Марія, мешканка звичайного містечка 90-х. Вона люблячa мати і дбайлива дружина, але її чоловік, обтяжений різними проблемами, скочується до алкоголізму та домашнього насильства. Марія погоджується терпіти, але не тоді, коли це стосується життя та здоров&#39;я її дитини — вона готова на все...</p>
+            <p class="game-page__paragraph">The main character of the game is Mary, a resident of a regular town in 90th. She is a loving mother and careful wife, but her husband, full of different problems, falls down to the alcoholism and domestic abuse. Mary agrees to tolerate, but not when it is about life and health of her child, she is ready to do anything...</p>
           
         
           
-            <h3 class="game-page__features-title">Ключові особливості:</h3>
+            <h3 class="game-page__features-title">Key Features:</h3>
           
         
           
             <ul class="game-page__features-list">
               
-                <li class="game-page__features-item">Досліджуйте атмосферні локації намальовані від руки із складними головоломками</li>
+                <li class="game-page__features-item">Explore atmospheric hand-painted locations with challenging puzzles</li>
               
-                <li class="game-page__features-item">Насолоджуйтесь драматичною історією з несподіваним фіналом</li>
+                <li class="game-page__features-item">Enjoy a dramatic story with an unexpected ending</li>
               
-                <li class="game-page__features-item">Слухайте дивовижний саундтрек від класичних композиторів</li>
+                <li class="game-page__features-item">Listen to an amazing soundtrack by classic composers</li>
               
             </ul>
           
@@ -359,6 +378,28 @@
     }
   }
 
+  // Таби категорій на головній сторінці — фільтруємо картки ігор без переходу на сервер
+  function applyActiveCategoryTab(category) {
+    // підсвічуємо активний таб
+    document.querySelectorAll('[data-category-tab]').forEach(btn => {
+      btn.classList.toggle('category-tabs__button--active', btn.dataset.categoryTab === category);
+    });
+
+    // показуємо лише картки обраної категорії
+    document.querySelectorAll('.games__game').forEach(card => {
+      card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-category-tab]');
+    if (!tab) return;
+
+    const category = tab.dataset.categoryTab;
+    sessionStorage.setItem('activeCategory', category);
+    applyActiveCategoryTab(category);
+  });
+
   // Навігація на сторінку гри - бере актуальну мову з URL
 
   document.addEventListener('click', (e) => {
@@ -367,7 +408,9 @@
 
     const card = zone.closest('[data-game-id]');
     const currentLang = window.location.pathname.split('/')[1];
-    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+    const url = `/${currentLang}/${card.dataset.gameCategory}/${card.dataset.gameId}/`;
+
+    sessionStorage.setItem('activeCategory', card.dataset.gameCategory);
 
     history.pushState(null, '', url);
     htmx.ajax('GET', url, {
@@ -378,12 +421,12 @@
   });
 
 
- // Кнопка назад повертає на головну сторінку зі збереженням мови
+ // Кнопка назад повертає на головну сторінку зі збереженням мови й активного табу категорії
 
   document.addEventListener('click', (e) => {
     const backBtn = e.target.closest('[data-action="go-back"]');
     if(!backBtn) return;
-  
+
     const currentLang = window.location.pathname.split('/')[1];
     const url = `/${currentLang}/`;
 
@@ -392,6 +435,9 @@
       target:'#main-content',
       swap: 'innerHTML',
       select:'.main__container'
+    }).then(() => {
+      const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+      applyActiveCategoryTab(savedCategory);
     });
   })
 
@@ -399,11 +445,14 @@
   window.addEventListener('popstate', () => {
     const pathParts = window.location.pathname.split('/');
     const savedLang = sessionStorage.getItem('lang') || pathParts[1];
-    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+  //перевіряю чи міститься категорія і id гри після слешів
+    const category = pathParts[2];
+    const gameId = pathParts[3];
+    const isGamePage = Boolean(category && gameId);
 
     if(isGamePage) {
-      const gameId = pathParts[3];
-      const url = `/${savedLang}/games/${gameId}/`;
+      sessionStorage.setItem('activeCategory', category);
+      const url = `/${savedLang}/${category}/${gameId}/`;
       history.replaceState(null, '', url);
 
       htmx.ajax('GET', url, {
@@ -420,6 +469,9 @@
         target:  '#main-content',
         swap: 'innerHTML',
         select: '.main__container',
+      }).then(() => {
+        const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+        applyActiveCategoryTab(savedCategory);
       });
     }
   });
@@ -484,7 +536,9 @@
 
   const gameId = link.dataset.navGame;
   const currentLang = window.location.pathname.split('/')[1];
-  const url = `/${currentLang}/games/${gameId}/`;
+  const url = `/${currentLang}/${link.dataset.navCategory}/${gameId}/`;
+
+  sessionStorage.setItem('activeCategory', link.dataset.navCategory);
 
   // Закриваємо меню
   const nav = document.querySelector('.nav');

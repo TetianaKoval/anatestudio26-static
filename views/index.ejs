@@ -16,10 +16,26 @@
         </div>
         <div class="blue-line blue-line--top"></div>
 
+        <div class="category-tabs" role="tablist">
+          <button
+            type="button"
+            class="category-tabs__button category-tabs__button--active"
+            data-category-tab="story-based-games"
+            data-lang="category_story_based_games"
+          ><%= t.category_story_based_games %></button>
+          <button
+            type="button"
+            class="category-tabs__button"
+            data-category-tab="experimental-games"
+            data-lang="category_experimental_games"
+          ><%= t.category_experimental_games %></button>
+        </div>
+
         <div class="main__games games">
           <% games.forEach(game => { %>
             <%- include('game-card', { 
-              id: game.id, 
+              id: game.id,
+              category: game.category, 
               image: game.image, 
               name: game.name, 
               langKey: game.langKey,

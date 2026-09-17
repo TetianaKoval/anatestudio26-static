@@ -77,6 +77,28 @@
     }
   }
 
+  // Таби категорій на головній сторінці — фільтруємо картки ігор без переходу на сервер
+  function applyActiveCategoryTab(category) {
+    // підсвічуємо активний таб
+    document.querySelectorAll('[data-category-tab]').forEach(btn => {
+      btn.classList.toggle('category-tabs__button--active', btn.dataset.categoryTab === category);
+    });
+
+    // показуємо лише картки обраної категорії
+    document.querySelectorAll('.games__game').forEach(card => {
+      card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-category-tab]');
+    if (!tab) return;
+
+    const category = tab.dataset.categoryTab;
+    sessionStorage.setItem('activeCategory', category);
+    applyActiveCategoryTab(category);
+  });
+
   // Навігація на сторінку гри - бере актуальну мову з URL
 
   document.addEventListener('click', (e) => {
@@ -85,7 +107,9 @@
 
     const card = zone.closest('[data-game-id]');
     const currentLang = window.location.pathname.split('/')[1];
-    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+    const url = `/${currentLang}/${card.dataset.gameCategory}/${card.dataset.gameId}/`;
+
+    sessionStorage.setItem('activeCategory', card.dataset.gameCategory);
 
     history.pushState(null, '', url);
     htmx.ajax('GET', url, {
@@ -96,12 +120,12 @@
   });
 
 
- // Кнопка назад повертає на головну сторінку зі збереженням мови
+ // Кнопка назад повертає на головну сторінку зі збереженням мови й активного табу категорії
 
   document.addEventListener('click', (e) => {
     const backBtn = e.target.closest('[data-action="go-back"]');
     if(!backBtn) return;
-  
+
     const currentLang = window.location.pathname.split('/')[1];
     const url = `/${currentLang}/`;
 
@@ -110,6 +134,9 @@
       target:'#main-content',
       swap: 'innerHTML',
       select:'.main__container'
+    }).then(() => {
+      const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+      applyActiveCategoryTab(savedCategory);
     });
   })
 
@@ -117,11 +144,14 @@
   window.addEventListener('popstate', () => {
     const pathParts = window.location.pathname.split('/');
     const savedLang = sessionStorage.getItem('lang') || pathParts[1];
-    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+  //перевіряю чи міститься категорія і id гри після слешів
+    const category = pathParts[2];
+    const gameId = pathParts[3];
+    const isGamePage = Boolean(category && gameId);
 
     if(isGamePage) {
-      const gameId = pathParts[3];
-      const url = `/${savedLang}/games/${gameId}/`;
+      sessionStorage.setItem('activeCategory', category);
+      const url = `/${savedLang}/${category}/${gameId}/`;
       history.replaceState(null, '', url);
 
       htmx.ajax('GET', url, {
@@ -138,6 +168,9 @@
         target:  '#main-content',
         swap: 'innerHTML',
         select: '.main__container',
+      }).then(() => {
+        const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+        applyActiveCategoryTab(savedCategory);
       });
     }
   });
@@ -202,7 +235,9 @@
 
   const gameId = link.dataset.navGame;
   const currentLang = window.location.pathname.split('/')[1];
-  const url = `/${currentLang}/games/${gameId}/`;
+  const url = `/${currentLang}/${link.dataset.navCategory}/${gameId}/`;
+
+  sessionStorage.setItem('activeCategory', link.dataset.navCategory);
 
   // Закриваємо меню
   const nav = document.querySelector('.nav');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
 
   <head>
   <meta charset="UTF-8">
@@ -34,12 +34,31 @@
     </div>
 
     <ul class="nav__games">
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="hermitate" data-nav-category="story-based-games">Hermitate</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-safe-place" data-nav-category="story-based-games">The Safe Place</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="repentant" data-nav-category="story-based-games">Repentant</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="little-kite" data-nav-category="story-based-games">Little Kite</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="octave" data-nav-category="experimental-games">Octave</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-kite" data-nav-category="story-based-games">The Kite</a>
+        </li>
+      
     </ul>
   </div>
 </nav>
@@ -58,11 +77,11 @@
       
         
           
-            <p class="game-page__paragraph">Hermitate — це стилізований 3D-трилер у жанрі point-and-click та похмура кримінальна драма в естетиці low-poly неонуару.</p>
+            <p class="game-page__paragraph">Hermitate is a stylized 3D point-and-click thriller and a grim crime drama wrapped in a low-poly neo-noir aesthetic.</p>
           
         
           
-            <p class="game-page__paragraph">Коли єдина близька людина раптово зникає, Христина — дівчина з важким вуличним минулим — вимушена зійтися у смертельному протистоянні з власною депресією, кримінальним підпіллям та жорстокими привидами минулого. Це історія про спокуту, фаталізм і ціну, яку доводиться платити за надію у світі, де мораль давно розчинилася в темряві.</p>
+            <p class="game-page__paragraph">When her only close friend suddenly vanishes, Сhrystyna - a young woman with a traumatic street past - is forced into a deadly confrontation with her own depression, the criminal underworld, and the relentless ghosts of her past. It is a story of redemption, fatalism, and the price one must pay for hope in a world where morality has long dissolved into darkness.</p>
           
         
         
@@ -450,6 +469,28 @@
     }
   }
 
+  // Таби категорій на головній сторінці — фільтруємо картки ігор без переходу на сервер
+  function applyActiveCategoryTab(category) {
+    // підсвічуємо активний таб
+    document.querySelectorAll('[data-category-tab]').forEach(btn => {
+      btn.classList.toggle('category-tabs__button--active', btn.dataset.categoryTab === category);
+    });
+
+    // показуємо лише картки обраної категорії
+    document.querySelectorAll('.games__game').forEach(card => {
+      card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-category-tab]');
+    if (!tab) return;
+
+    const category = tab.dataset.categoryTab;
+    sessionStorage.setItem('activeCategory', category);
+    applyActiveCategoryTab(category);
+  });
+
   // Навігація на сторінку гри - бере актуальну мову з URL
 
   document.addEventListener('click', (e) => {
@@ -458,7 +499,9 @@
 
     const card = zone.closest('[data-game-id]');
     const currentLang = window.location.pathname.split('/')[1];
-    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+    const url = `/${currentLang}/${card.dataset.gameCategory}/${card.dataset.gameId}/`;
+
+    sessionStorage.setItem('activeCategory', card.dataset.gameCategory);
 
     history.pushState(null, '', url);
     htmx.ajax('GET', url, {
@@ -469,12 +512,12 @@
   });
 
 
- // Кнопка назад повертає на головну сторінку зі збереженням мови
+ // Кнопка назад повертає на головну сторінку зі збереженням мови й активного табу категорії
 
   document.addEventListener('click', (e) => {
     const backBtn = e.target.closest('[data-action="go-back"]');
     if(!backBtn) return;
-  
+
     const currentLang = window.location.pathname.split('/')[1];
     const url = `/${currentLang}/`;
 
@@ -483,6 +526,9 @@
       target:'#main-content',
       swap: 'innerHTML',
       select:'.main__container'
+    }).then(() => {
+      const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+      applyActiveCategoryTab(savedCategory);
     });
   })
 
@@ -490,11 +536,14 @@
   window.addEventListener('popstate', () => {
     const pathParts = window.location.pathname.split('/');
     const savedLang = sessionStorage.getItem('lang') || pathParts[1];
-    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+  //перевіряю чи міститься категорія і id гри після слешів
+    const category = pathParts[2];
+    const gameId = pathParts[3];
+    const isGamePage = Boolean(category && gameId);
 
     if(isGamePage) {
-      const gameId = pathParts[3];
-      const url = `/${savedLang}/games/${gameId}/`;
+      sessionStorage.setItem('activeCategory', category);
+      const url = `/${savedLang}/${category}/${gameId}/`;
       history.replaceState(null, '', url);
 
       htmx.ajax('GET', url, {
@@ -511,6 +560,9 @@
         target:  '#main-content',
         swap: 'innerHTML',
         select: '.main__container',
+      }).then(() => {
+        const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+        applyActiveCategoryTab(savedCategory);
       });
     }
   });
@@ -575,7 +627,9 @@
 
   const gameId = link.dataset.navGame;
   const currentLang = window.location.pathname.split('/')[1];
-  const url = `/${currentLang}/games/${gameId}/`;
+  const url = `/${currentLang}/${link.dataset.navCategory}/${gameId}/`;
+
+  sessionStorage.setItem('activeCategory', link.dataset.navCategory);
 
   // Закриваємо меню
   const nav = document.querySelector('.nav');

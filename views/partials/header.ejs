@@ -20,12 +20,11 @@
     </div>
 
     <ul class="nav__games">
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+      <% games.forEach(game => { %>
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="<%= game.id %>" data-nav-category="<%= game.category %>"><%= game.name %></a>
+        </li>
+      <% }) %>
     </ul>
   </div>
 </nav>

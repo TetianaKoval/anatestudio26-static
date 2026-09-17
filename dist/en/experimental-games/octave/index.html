@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
 
   <head>
   <meta charset="UTF-8">
@@ -34,12 +34,31 @@
     </div>
 
     <ul class="nav__games">
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="hermitate">Hermitate</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-safe-place">The Safe Place</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="repentant">Repentant</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="little-kite">Little Kite</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="octave">Octave</a></li>
-      <li class="nav__item"><a href="#" class="nav__link" data-nav-game="the-kite">The Kite</a></li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="hermitate" data-nav-category="story-based-games">Hermitate</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-safe-place" data-nav-category="story-based-games">The Safe Place</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="repentant" data-nav-category="story-based-games">Repentant</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="little-kite" data-nav-category="story-based-games">Little Kite</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="octave" data-nav-category="experimental-games">Octave</a>
+        </li>
+      
+        <li class="nav__item">
+          <a href="#" class="nav__link" data-nav-game="the-kite" data-nav-category="story-based-games">The Kite</a>
+        </li>
+      
     </ul>
   </div>
 </nav>
@@ -58,25 +77,25 @@
       
         
           
-            <p class="game-page__paragraph">Octave — це пригодницький хорор у жанрі point-and-click з елементами екшену.</p>
+            <p class="game-page__paragraph">Octave is a point-and-click horror adventure with action elements.</p>
           
         
           
-            <p class="game-page__paragraph">Ви граєте за хлопця, який випадково опинився не в тому місці й не в той час. Невідома сила затягує його до похмурого лісу, де на межі смерті його рятує загадкова істота. Та дуже швидко стає зрозуміло, що порятунок може виявитися страшнішим за саму смерть. Пробираючись крізь темні хащі, ви зіткнетеся з моторошними істотами, розкриєте таємниці проклятого лісу й зробите все, щоб вижити. Боротьба за життя тільки починається!</p>
+            <p class="game-page__paragraph">You play the role of a guy who happens to be in the wrong place at the wrong time. You are dragged into a dark forest, but on the verge of death, you are mysteriously saved from your killer by a someone or something. As you venture deeper into the woods you find yourself surrounded by atrocity. You realise that salvation can turn out to be a real nightmare. All the way through fear you seek out the mysteries of the dark forest. The struggle for life has only just begun!</p>
           
         
           
-            <h3 class="game-page__features-title">Ключові особливості:</h3>
+            <h3 class="game-page__features-title">Key Features:</h3>
           
         
           
             <ul class="game-page__features-list">
               
-                <li class="game-page__features-item">атмосферний темний ліс з моторошними тінями та монстрами</li>
+                <li class="game-page__features-item">atmospheric dark forest with creepy shadows and monsters</li>
               
-                <li class="game-page__features-item">старий будинок сповнений головоломок та паранормальних явищ</li>
+                <li class="game-page__features-item">old house full of puzzles and paranormal activities</li>
               
-                <li class="game-page__features-item">підземний світ, де доведеться багато бігати</li>
+                <li class="game-page__features-item">the underworld, where you have to run a lot</li>
               
             </ul>
           
@@ -374,6 +393,28 @@
     }
   }
 
+  // Таби категорій на головній сторінці — фільтруємо картки ігор без переходу на сервер
+  function applyActiveCategoryTab(category) {
+    // підсвічуємо активний таб
+    document.querySelectorAll('[data-category-tab]').forEach(btn => {
+      btn.classList.toggle('category-tabs__button--active', btn.dataset.categoryTab === category);
+    });
+
+    // показуємо лише картки обраної категорії
+    document.querySelectorAll('.games__game').forEach(card => {
+      card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-category-tab]');
+    if (!tab) return;
+
+    const category = tab.dataset.categoryTab;
+    sessionStorage.setItem('activeCategory', category);
+    applyActiveCategoryTab(category);
+  });
+
   // Навігація на сторінку гри - бере актуальну мову з URL
 
   document.addEventListener('click', (e) => {
@@ -382,7 +423,9 @@
 
     const card = zone.closest('[data-game-id]');
     const currentLang = window.location.pathname.split('/')[1];
-    const url = `/${currentLang}/games/${card.dataset.gameId}/`;
+    const url = `/${currentLang}/${card.dataset.gameCategory}/${card.dataset.gameId}/`;
+
+    sessionStorage.setItem('activeCategory', card.dataset.gameCategory);
 
     history.pushState(null, '', url);
     htmx.ajax('GET', url, {
@@ -393,12 +436,12 @@
   });
 
 
- // Кнопка назад повертає на головну сторінку зі збереженням мови
+ // Кнопка назад повертає на головну сторінку зі збереженням мови й активного табу категорії
 
   document.addEventListener('click', (e) => {
     const backBtn = e.target.closest('[data-action="go-back"]');
     if(!backBtn) return;
-  
+
     const currentLang = window.location.pathname.split('/')[1];
     const url = `/${currentLang}/`;
 
@@ -407,6 +450,9 @@
       target:'#main-content',
       swap: 'innerHTML',
       select:'.main__container'
+    }).then(() => {
+      const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+      applyActiveCategoryTab(savedCategory);
     });
   })
 
@@ -414,11 +460,14 @@
   window.addEventListener('popstate', () => {
     const pathParts = window.location.pathname.split('/');
     const savedLang = sessionStorage.getItem('lang') || pathParts[1];
-    const isGamePage = pathParts[2] === 'games'; // /ua/games/the-kite
+  //перевіряю чи міститься категорія і id гри після слешів
+    const category = pathParts[2];
+    const gameId = pathParts[3];
+    const isGamePage = Boolean(category && gameId);
 
     if(isGamePage) {
-      const gameId = pathParts[3];
-      const url = `/${savedLang}/games/${gameId}/`;
+      sessionStorage.setItem('activeCategory', category);
+      const url = `/${savedLang}/${category}/${gameId}/`;
       history.replaceState(null, '', url);
 
       htmx.ajax('GET', url, {
@@ -435,6 +484,9 @@
         target:  '#main-content',
         swap: 'innerHTML',
         select: '.main__container',
+      }).then(() => {
+        const savedCategory = sessionStorage.getItem('activeCategory') || 'story-based-games';
+        applyActiveCategoryTab(savedCategory);
       });
     }
   });
@@ -499,7 +551,9 @@
 
   const gameId = link.dataset.navGame;
   const currentLang = window.location.pathname.split('/')[1];
-  const url = `/${currentLang}/games/${gameId}/`;
+  const url = `/${currentLang}/${link.dataset.navCategory}/${gameId}/`;
+
+  sessionStorage.setItem('activeCategory', link.dataset.navCategory);
 
   // Закриваємо меню
   const nav = document.querySelector('.nav');

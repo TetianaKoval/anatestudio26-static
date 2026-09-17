@@ -1,4 +1,4 @@
-<article class="games__game game" data-game-id="<%= id %>">
+<article class="games__game game<%= category !== 'story-based-games' ? ' games__game--hidden' : '' %>" data-game-id="<%= id %>" data-game-category="<%= category %>">
   <div class="game__preview-zone">
     <div class="game__image">
       <img src="/images/games/<%= image %>" alt="<%= name %> preview">

@@ -75,11 +75,11 @@ app.get('/:lang', (req, res) => {
   res.render('index', { games: gameList });
 });
 
-app.get('/:lang/games/:gameId', (req, res) => {
-  const { gameId } = req.params;
+app.get('/:lang/:category/:gameId', (req, res) => {
+  const { gameId, category } = req.params;
 
   // шукаєм дану гру за id в gamesList
-  const targetGame = gameList.find(game => game.id === gameId);
+  const targetGame = gameList.find(game => game.id === gameId && game.category === category);
 
   if(!targetGame) {
     return res.redirect(`/${res.locals.currentLang}`)
@@ -92,7 +92,7 @@ app.get('/:lang/games/:gameId', (req, res) => {
   if(isHtmxRequest) {
     res.render('game-detail', { game: targetGame });
   } else {
-    res.render('game-page', { game: targetGame});
+    res.render('game-page', { game: targetGame, games: gameList });
   }
 });
 

@@ -2,6 +2,7 @@
 export const gameList = [
   {
     id: 'hermitate',
+    category: 'story-based-games',
     image: 'hermitate_ava.jpg',
     name: 'Hermitate',
     langKey: 'hermitate_description',
@@ -23,6 +24,7 @@ export const gameList = [
   },
   {
     id: 'the-safe-place',
+    category: 'story-based-games',
     image: 'safe_place_ava.png',
     name: 'The Safe Place',
     langKey: 'the_safe_place_description',
@@ -53,6 +55,7 @@ export const gameList = [
   },
   {
     id: 'repentant',
+    category: 'story-based-games',
     image: 'repentant_ava.png',
     name: 'Repentant',
     langKey: 'repentant_description',
@@ -78,6 +81,7 @@ export const gameList = [
   },
   {
     id: 'little-kite',
+    category: 'story-based-games',
     image: 'little_kite_ava.jpg',
     name: 'Little Kite',
     langKey: 'little_kite_description',
@@ -107,6 +111,7 @@ export const gameList = [
   },
   {
     id: 'octave',
+    category: 'experimental-games',
     image: 'octave_ava.png',
     name: 'Octave',
     langKey: 'octave_description',
@@ -124,6 +129,7 @@ export const gameList = [
   },
   {
     id: 'the-kite',
+    category: 'story-based-games',
     image: 'the_kite_ava.png',
     name: 'The Kite',
     langKey: 'the_kite_description',
