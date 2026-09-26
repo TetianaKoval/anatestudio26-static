@@ -374,6 +374,7 @@ body {
   margin-left: calc(-50vw + 50%);
   width: calc(50vw + 50%);
   margin-bottom: -30px;
+  margin-top: 0px;
 }
 
 .blue-line--bottom {
@@ -394,30 +395,104 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 4px;
-  margin-bottom: 40px;
+  margin-bottom: -48px;
 }
 
 .category-tabs__button {
-  border: none;
-  cursor: pointer;
-  padding: 12px 32px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background-color: var(--text-color);
   color: #fff;
+  font-size: 18px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
   transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  border: none;
+  background: transparent;   /* фон переїжджає в ::before */
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.category-tabs__button--left {
+  padding: 8px 44px 4px 28px;  /* більший правий відступ під скіс */
+  transform: translateX(24px);
+}
+
+.category-tabs__button--right {
+  padding: 8px 28px 4px 44px;  /* більший лівий відступ під скіс */
+  transform: translateX(-24px);
+}
+
+.category-tabs__button--left::before {
+  content: '';
+  position: absolute;
+  inset: 0;                 /* розтягує на всю кнопку */
+  background-color: #46C5EE;
+  border-radius: 10px 10px 0px 10px;
+  transform: skewX(18deg);
+  transform-origin: bottom left;
+  z-index: -1;              /* фон позаду тексту */
+  border-top: 4px solid #46C5ee;
+  border-right: 5px solid #46C5ee;
+}
+
+.category-tabs__button--left::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -5%;
+  right: 50%;
+  background-color: #46C5EE;
+  border-radius: 10px 0px 0px 0;
+  z-index: -1;
+  border-top: 4px solid #46C5ee;
+  border-left: 4px solid #46C5ee;
+}
+
+.category-tabs__button--right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #46C5EE;
+  border-radius: 10px 10px 10px 0px;
+  transform: skewX(-18deg);
+  transform-origin: bottom right;   /* дзеркально до лівого */
+  z-index: -1;
+  border-top: 4px solid #46C5ee;
+  border-left: 5px solid #46C5ee;
+}
+
+.category-tabs__button--right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: -5%;
+  background-color: #46C5EE;
+  border-radius: 0 10px 0 0;
+  z-index: -1;
+  border-top: 4px solid #46C5ee;
+  border-right: 4px solid #46C5ee;
+}
+
+/* Активний таб: фон живе у псевдоелементах, тому колір міняємо саме там */
+.category-tabs__button--active::before,
+.category-tabs__button--active::after {
+  background-color: #fff;
 }
 
 .category-tabs__button--active {
-  background-color: #46C5EE;
   color: var(--text-color);
+  z-index: 10;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.category-tabs__button:not(.category-tabs__button--active):hover {
-  background-color: #333;
+.category-tabs__button:not(.category-tabs__button--active):hover::before,
+.category-tabs__button:not(.category-tabs__button--active):hover::after {
+  background-color: #2fb3e0;
 }
 
 .games__game--hidden {
