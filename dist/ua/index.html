@@ -78,17 +78,33 @@
             type="button"
             class="category-tabs__button category-tabs__button--left category-tabs__button--active"
             data-category-tab="story-based-games"
-            data-lang="category_story_based_games"
-          >Ігри з сюжетом</button>
+          >
+            <!-- іконка "книжка" — показується замість тексту на вузьких екранах -->
+            <svg class="category-tabs__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 6.5C10.5 5 8.5 4.5 4 4.5v13c4.5 0 6.5.5 8 2 1.5-1.5 3.5-2 8-2v-13c-4.5 0-6.5.5-8 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M12 6.5v13" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <span class="category-tabs__label" data-lang="category_story_based_games">Ігри з сюжетом</span>
+          </button>
           <button
             type="button"
             class="category-tabs__button category-tabs__button--right"
             data-category-tab="experimental-games"
-            data-lang="category_experimental_games"
-          >Експериментальні ігри</button>
+          >
+            <!-- іконка "колба" -->
+            <svg class="category-tabs__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 3h6M10 3v6.2L5.2 17A2 2 0 0 0 7 20h10a2 2 0 0 0 1.8-3L14 9.2V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.5 14h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span class="category-tabs__label" data-lang="category_experimental_games">Експериментальні ігри</span>
+          </button>
         </div>
 
         <div class="blue-line blue-line--top"></div>
+
+        <!-- Назва активної категорії — видима лише на вузьких екранах,
+             де в табах замість назв показані іконки -->
+        <h2 class="games-category-title" data-lang="category_story_based_games">Ігри з сюжетом</h2>
 
         <div class="main__games games">
           
@@ -474,6 +490,16 @@
     document.querySelectorAll('.games__game').forEach(card => {
       card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
     });
+
+    // оновлюємо заголовок над списком (видимий лише на вузьких екранах).
+    // Текст беремо просто з підпису активного таба — він уже перекладений
+    const activeLabel = document.querySelector(`[data-category-tab="${category}"] .category-tabs__label`);
+    const title = document.querySelector('.games-category-title');
+    if (title && activeLabel) {
+      title.textContent = activeLabel.textContent;
+      // переносимо і ключ перекладу, щоб перемикач мови оновив заголовок правильно
+      title.dataset.lang = activeLabel.dataset.lang;
+    }
   }
 
   document.addEventListener('click', (e) => {

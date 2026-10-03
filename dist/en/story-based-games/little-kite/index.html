@@ -494,6 +494,16 @@
     document.querySelectorAll('.games__game').forEach(card => {
       card.classList.toggle('games__game--hidden', card.dataset.gameCategory !== category);
     });
+
+    // оновлюємо заголовок над списком (видимий лише на вузьких екранах).
+    // Текст беремо просто з підпису активного таба — він уже перекладений
+    const activeLabel = document.querySelector(`[data-category-tab="${category}"] .category-tabs__label`);
+    const title = document.querySelector('.games-category-title');
+    if (title && activeLabel) {
+      title.textContent = activeLabel.textContent;
+      // переносимо і ключ перекладу, щоб перемикач мови оновив заголовок правильно
+      title.dataset.lang = activeLabel.dataset.lang;
+    }
   }
 
   document.addEventListener('click', (e) => {

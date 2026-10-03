@@ -27,6 +27,10 @@ body {
   font-size: 16px;
 }
 
+.main__container {
+  overflow-x: hidden;
+}
+
 /* обмежувач ширини */
 
 [class*="__container"] {
@@ -240,7 +244,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 40px;
-  padding: 40px 0;
+  padding: 10px 0;
 }
 
 @media (max-width: 420px) {
@@ -336,13 +340,16 @@ body {
   gap: 16px;
 }
 
+/* Розміри задані явно (а не через fit-content) — старий Safari на iOS
+   погано розуміє fit-content, і коробка рахувалась неправильно */
 .icon {
-  width: fit-content;
+  width: 30px;
+  height: 30px;
 }
 
 .icon__link {
   display: block;
-  width: fit-content;
+  width: 30px;
   height: 30px;
   overflow: hidden;
 }
@@ -353,9 +360,10 @@ body {
 }
 
 .icon__image {
+  display: block;        /* без block картинка лишається inline і "сідає" на базову лінію — низ обрізається */
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;   /* contain, а не cover — щоб іконка вміщалась цілком, без обрізання */
 }
 
 
@@ -375,7 +383,7 @@ body {
   background-position: right center;
   margin-left: calc(-50vw + 50%);
   width: calc(50vw + 50%);
-  margin-bottom: -30px;
+  margin-bottom: 0px;
   margin-top: 0px;
 }
 
@@ -385,6 +393,25 @@ body {
   margin-right: calc(-50vw + 50%);
   width: calc(50vw + 50%);
   scale: -1 1;
+}
+
+/* На вужчих екранах картинка-шлейф погано масштабується поруч із табами —
+   замінюємо її на рівну смугу, а табам повертаємо звичайний відступ
+   (бо від'ємний margin був розрахований на висоту картинки) */
+@media (max-width: 1064px) {
+  .blue-line--top {
+      background-image: none;
+      background-color: var(--accent-color);
+      height: 4px;
+      margin-bottom: 40px;
+      margin-top: 48px;
+      width: 110%;
+  }
+
+  .category-tabs {
+    margin-bottom: 24px;
+    padding-top: 30px;
+  }
 }
 
 
@@ -477,6 +504,17 @@ body {
   border-right: 4px solid #46C5ee;
 }
 
+@media (max-width: 720px) {
+  .category-tabs__button--right::after{
+    right: -11%;
+  }
+
+  .category-tabs__button--left::after {
+    left: -11%;
+  }
+  
+}
+
 /* Активний таб: фон живе у псевдоелементах, тому колір міняємо саме там */
 .category-tabs__button--active::before,
 .category-tabs__button--active::after {
@@ -495,6 +533,42 @@ body {
 .category-tabs__button:not(.category-tabs__button--active):hover::before,
 .category-tabs__button:not(.category-tabs__button--active):hover::after {
   background-color: var(--accent-color-hover);
+}
+
+/* Іконка переймає колір тексту кнопки через currentColor,
+   тому в активному табі стає темною автоматично */
+.category-tabs__icon {
+  display: none;
+  width: 26px;
+  height: 26px;
+  vertical-align: middle;
+}
+
+/* Заголовок з назвою активної категорії — потрібен лише там,
+   де в табах замість назв іконки */
+.games-category-title {
+  display: none;
+}
+
+/* На вузьких екранах замість назв показуємо іконки — так таби влазять в один ряд */
+@media (max-width: 720px) {
+  .category-tabs__label {
+    display: none;
+  }
+
+  .category-tabs__icon {
+    display: block;
+  }
+
+  .games-category-title {
+    display: block;
+    margin-top: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
 }
 
 .games__game--hidden {
